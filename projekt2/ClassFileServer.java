@@ -1,3 +1,4 @@
+package projekt2;
 /*
  *
  * Copyright (c) 1994, 2004, Oracle and/or its affiliates. All rights reserved.
