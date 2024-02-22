@@ -13,6 +13,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+import java.security.cert.*; //Fungerar inte annars
 
 public class Client {
     public static void main(String[] args) throws Exception {
