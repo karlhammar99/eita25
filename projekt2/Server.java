@@ -67,7 +67,7 @@ public class Server implements Runnable {
 
       String clientMsg = null;
       while ((clientMsg = in.readLine()) != null) {
-        String answer = ip.answer(individual, in.readLine());
+        String answer = ip.answer(individual, clientMsg);
         //String rev = new StringBuilder(clientMsg).reverse().toString();
         System.out.println("received '" + clientMsg + "' from client");
         System.out.print("sending '" + answer + "' to client...");

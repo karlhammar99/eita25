@@ -18,132 +18,132 @@ public class IndividualPermissions {
 
 
 
-    public String answer(Individual individual, String request) {
+    public String answer(Individual individual, String request) { // som nurse kan man skriva: write
+                                                                  // Kalle record1 Mår bra
 
         String[] words = request.split(" ");
         String action = words[0];
         String patientName = words[1];
 
-        if (words.length > 2) { // Om doctor och man vill göra något med medical records
-            for (int i = 2; i < words.length; i++) {
-
-            }
-        }
-
 
         switch (individual.getRole()) {
             // -------------------------------------------------------------------------------------------
             case "DOCTOR":
-                switch (action) {
-                    case "create":
-                        // doktorn skriver:
-                        // create patient1 data
-                        // createRecord()
-                        for (Individual other : individuals) {
-                            if (other instanceof Patient) {
-                                Patient patient = (Patient) other;
-                                if (patient.getName().equals(patientName)
-                                        && patient.getDoctor().equals(individual.getName())) {
-                                    // Får createa
-                                    // createRecord();
-                                    return "Record created";
-                                }
+
+                for (Individual other : individuals) {
+                    if (other instanceof Patient) {
+                        Patient patient = (Patient) other;
+                        if (patient.getName().equals(patientName)) {
+
+                            switch (action) {
+                                case "create":// create patient1 nurse1 data
+
+                                    patient.createMedicalRecord(individual.getName(), words[2],
+                                            request.substring(3));
+                                    return "Medical record created";
+                                case "write":// write Kalle 3 han mår bra
+
+                                    if (!patient.associatedWithRecord(individual.getName(),
+                                            individual.getDivision(),
+                                            Integer.valueOf(words[2]))) {
+                                        return "Not allowed to access patients record";
+                                    }
+                                    patient.writeMedicalRecord(individual.getName(),
+                                            Integer.valueOf(words[2]),
+                                            request.substring(3));
+                                    return "Medical record written";
+                                case "read":// read Kalle 3
+
+                                    if (!patient.associatedWithRecord(individual.getName(),
+                                            individual.getDivision(),
+                                            Integer.valueOf(words[2]))) {
+                                        return "Not allowed to access patients record";
+                                    }
+                                    return patient.readMedicalRecord(Integer.valueOf(words[2]));
+                                default:
+                                    return "No such action";
                             }
                         }
-                        break;
-                    case "write":
-
-                        for (Individual i : individuals) {
-                            if (individual.equals(i)
-                                    || individual.getDivision().equals(i.getDivision())) {
-                                // BORDE funka??????????
-                                // write()
-                                return "Record written";
-                            }
-                        }
-
-                        break;
-                    case "read":
-
-                        for (Individual i : individuals) {
-                            if (individual.getDivision().equals(i.getDivision())) {
-                                // BORDE funka??????????
-                                // return read();
-                            }
-                        }
-
-                        break;
-                    default:
-                        System.out.println("NOT ALLOWED");
-                        break;
+                    }
                 }
+                return "No patient match";
 
-
-
-                break;
             // -------------------------------------------------------------------------------------------
             case "NURSE":
 
-                switch (action) {
-                    case "create":
-                        System.out.println("NOT ALLOWED");
-                        break;
-                    case "write":
+                for (Individual other : individuals) {
+                    if (other instanceof Patient) {
+                        Patient patient = (Patient) other;
+                        if (patient.getName().equals(patientName)) {
 
-                        for (Individual i : individuals) {
-                            if (individual.equals(i)) {
-                                // BORDE funka??????????
-                                // writeToRecord()
+                            switch (action) {
+                                case "create":// create patient1 nurse1 data
+                                    return "Illegal action";
+                                case "write":// write Kalle 3 han mår bra
+
+                                    if (!patient.associatedWithRecord(individual.getName(),
+                                            individual.getDivision(),
+                                            Integer.valueOf(words[2]))) {
+                                        return "Not allowed to access patients record";
+                                    }
+                                    patient.writeMedicalRecord(individual.getName(),
+                                            Integer.valueOf(words[2]),
+                                            request.substring(3));
+                                    return "Medical record written";
+                                case "read":// read Kalle 3
+
+                                    if (!patient.associatedWithRecord(individual.getName(),
+                                            individual.getDivision(),
+                                            Integer.valueOf(words[2]))) {
+                                        return "Not allowed to access patients record";
+                                    }
+                                    return patient.readMedicalRecord(Integer.valueOf(words[2]));
+                                default:
+                                    return "No such action";
                             }
                         }
-
-                        break;
-                    case "read":
-
-                        for (Individual i : individuals) {
-                            if (individual.equals(i)
-                                    || individual.getDivision().equals(i.getDivision())) {
-                                // BORDE funka??????????
-                                // return read();
-                            }
-                        }
-
-
-                        break;
-                    case "delete":
-                        System.out.println("NOT ALLOWED");
-                        break;
-
-                    default:
-                        System.out.println("NOT ALLOWED");
-                        break;
+                    }
                 }
-                // -------------------------------------------------------------------------------------------
+                return "Not allowed to access patients records";
+            // -------------------------------------------------------------------------------------------
             case "GOVERNMENT":
 
-                switch (action) {
-                    case "read":
-                        System.out.println("ALLOW");
-                        // return read();
-                        break;
-                    case "delete":
-                        // delete()
-                        System.out.println("ALLOW");
-                        break;
+                for (Individual other : individuals) {
+                    if (other instanceof Patient) {
+                        Patient patient = (Patient) other;
+                        if (patient.getName().equals(patientName)) {
 
-                    default:
-                        System.out.println("NOT ALLOWED");
-                        break;
+                            switch (action) {
+                                case "create":// create patient1 nurse1 data
+                                    return "Illegal action";
+                                case "write":// write Kalle 3 han mår bra
+                                    return "Illegal action";
+                                case "read":// read Kalle 3
+                                    return patient.readMedicalRecord(Integer.valueOf(words[2]));
+                                case "delete": //delete Kalle 3
+                                    patient.deleteMedicalRecord(Integer.valueOf(words[2]));
+                                    break;
+                                default:
+                                    return "No such action";
+                            }
+                        }
+                    }
                 }
 
                 break;
             // -------------------------------------------------------------------------------------------
             case "PATIENT":
                 switch (action) {
-                    case "read":
-                        if (patientName.equals(individual.getName())) {
-                            // får läsa
-                            // readRecord()
+                    case "read":// read 2
+                        for (Individual other : individuals) {
+                            if (other instanceof Patient) {
+                                Patient patient = (Patient) other;
+
+                                if (patient.getName().equals(individual.getName())) {
+                                    return patient.readMedicalRecord(Integer.valueOf(words[1]));
+                                }
+                            }
+
                         }
                         break;
 
@@ -160,11 +160,11 @@ public class IndividualPermissions {
     }
 
 
-    private boolean doctorPermissionCheck(Doctor dr, String request) {
+    /* private boolean doctorPermissionCheck(Doctor dr, String request) {
         return false;
-    }
+    } */
 
-    private boolean nursePermissionCheck(Nurse n, String request, String fileName) {
+    /* private boolean nursePermissionCheck(Nurse n, String request, String fileName) {
         boolean ret = false;
         readName(fileName).forEach(str -> {
             if (n.getName().equals(str)) {
@@ -173,21 +173,7 @@ public class IndividualPermissions {
         });
 
         return false;
-    }
-
-
-    private boolean patientPermissionCheck(Patient p, String request, String fileName) {
-        try {
-
-            if (p.getName().equals(readName(fileName))) {
-                return true;
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
-    }
+    } */
 
 
 
@@ -242,7 +228,7 @@ public class IndividualPermissions {
         return individuals;
     }
 
-    private String readName(String fileName) throws FileNotFoundException {
+    /* private String readName(String fileName) throws FileNotFoundException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
 
 
@@ -252,7 +238,7 @@ public class IndividualPermissions {
             return null;
         }
 
-    }
+    } */
 
 
 }
