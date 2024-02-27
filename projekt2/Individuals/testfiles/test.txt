@@ -1,9 +1,0 @@
-Alice Doctor Divison Patient1 Patient2 Patient3
-#<Namn Typ division [patienter]>
-
-Kalle Patient Division Doctor1
-#<Namn Typ Division behandlandeDoktor>
-
-Kurt Nurse Division Patient3 Patient4 Patient5
-
-#<Namn Typ Division [patienter]>

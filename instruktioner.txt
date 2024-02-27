@@ -1,0 +1,15 @@
+Som läkare kan man skriva:
+    read patient1 recordIndex
+    create patient1 nurse1 och här kan man skriva massa data
+    write patient1 recordIndex här kan man uppdatera datan
+
+Som sjuksköterska kan man skriva:
+    read patient1 recordIndex
+    write patient1 recordIndex
+
+Som patient kan man skriva:
+    read recordIndex
+
+Som government kan man skriva:
+    delete patient1 recordIndex
+    read patient1 recordIndex

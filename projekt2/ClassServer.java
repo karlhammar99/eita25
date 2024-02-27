@@ -40,7 +40,6 @@ package projekt2;
 
  import java.io.*;
  import java.net.*;
- import javax.net.*;
  
  /*
   * ClassServer.java -- a simple file server that can serve

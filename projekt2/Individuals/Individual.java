@@ -8,20 +8,16 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+import projekt2.IndividualPermissions.Role;
 
 public abstract class Individual {
 
-    String role;
+    Role role;
     String name;
     String division;
 
 
-    public Individual() {
-
-
-    }
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -32,26 +28,6 @@ public abstract class Individual {
     public String getDivision(){
         return division;
     }
-
-    public void setRole(String role){
-        this.role = role;
-    }
-    
-
-    public boolean isRole(String r) {
-
-        if (r.equals(role)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void setName(String s) {
-        name = s;
-    }
-
-
 
 
 }

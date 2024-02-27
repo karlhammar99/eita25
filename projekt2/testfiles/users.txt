@@ -1,0 +1,17 @@
+#<Namn Typ Division>
+#Doctors
+Alice Doctor Division1
+Bob Doctor Division2
+
+#Nurses
+Syster1 Nurse Division1
+Syster2 Nurse Division2
+Kurt Nurse Division3
+
+#Patients
+Kalle Patient Division1 Alice
+Rasmus Patient Division2 Doctor1
+#<Namn Typ Division behandlandeDoktor>
+
+#Government agencies
+CIA GovernmentAgency

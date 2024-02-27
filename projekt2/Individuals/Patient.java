@@ -1,64 +1,83 @@
 package projekt2.Individuals;
 
-import java.util.ArrayList;
-import projekt2.MedicalRecord;
+import projekt2.MedicalRecordHandler;
+import projekt2.IndividualPermissions.Role;
 
 public class Patient extends Individual {
 
     private String doctor;
-    private ArrayList<MedicalRecord> records;
 
     public Patient(String nurse, String division, String doctor) {
         this.name = nurse;
-        this.role = "PATIENT";
+        this.role = Role.Patient;
         this.division = division;
         this.doctor = doctor;
-        this.records = new ArrayList<>();
     }
 
-    public String getDoctor() {
-        return doctor;
-    }
-
-    public boolean createMedicalRecord(String doctor, String nurse, String data){
-        MedicalRecord record = new MedicalRecord(this, doctor, nurse, division, data);
-        return records.add(record);
+    public void createMedicalRecord(String doctor, String nurse, String data) {
+        MedicalRecordHandler.createMedicalRecord(this.name, doctor, nurse, this.division, data);
     }
 
     public void writeMedicalRecord(String patient, int recordIndex, String data) {
-        MedicalRecord record = records.get(recordIndex);
-        record.write(data);
+        String fileName = this.name + "_" + recordIndex;
+        MedicalRecordHandler.writeMedicalRecord(fileName, data);
     }
 
     public String readMedicalRecord(int recordIndex) {
-        return records.get(recordIndex).read();
+        String fileName = this.name + "_" + recordIndex;
+        return MedicalRecordHandler.readMedicalRecord(fileName);
     }
 
     public boolean deleteMedicalRecord(int recordIndex) {
-        MedicalRecord record = records.remove(recordIndex);
-        return record.delete();
+        String fileName = this.name + "_" + recordIndex;
+        return MedicalRecordHandler.deleteMedicalRecord(fileName);
     }
 
-    public int getNumberOfMedicalRecords(){
-        return records.size();
-    }
-
-    public boolean readWriteLegal(Individual individual) {
-        if(individual instanceof Patient){
-            if(this == individual){
-                return true;
-            }
+    public boolean recordExists(int recordIndex) {
+        String fileName = this.name + "_" + recordIndex;
+        if (!MedicalRecordHandler.exists(fileName)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
-    public boolean associatedWithRecord(String individualName, String division, int recordIndex) {
-        MedicalRecord record = records.get(recordIndex);
-        String doctor = record.getDoctor();
-        String nurse = record.getNurse();
-        String patient = record.getPatient();
+    public boolean canRead(Individual user, int recordIndex) {
+        String fileName = this.name + "_" + recordIndex;
+        
+        if (user.getRole().equals(Role.GovernmentAgency)) {
+            return true;
+        }
+        String userName = user.getName();
+        String division = user.getDivision();
 
-        return individualName.equals(doctor) || individualName.equals(nurse) || individualName.equals(patient) || division.equals(record.getDivision());
+        String doctor = MedicalRecordHandler.getDoctor(fileName);
+        String nurse = MedicalRecordHandler.getNurse(fileName);
+        String actualDivision = MedicalRecordHandler.getDivision(fileName);
+        String patient = MedicalRecordHandler.getPatient(fileName);
+
+        return userName.equals(doctor) || userName.equals(nurse) || userName.equals(patient)
+                || division.equals(actualDivision);
+    }
+
+    public boolean canWrite(Individual user, int recordIndex) {
+        String fileName = this.name + "_" + recordIndex;
+        if (!MedicalRecordHandler.exists(fileName)) {
+            return false;
+        }
+        if (user.getRole().equals(Role.GovernmentAgency)) {
+            return false;
+        }
+        String userName = user.getName();
+
+        String doctor = MedicalRecordHandler.getDoctor(fileName);
+        String nurse = MedicalRecordHandler.getNurse(fileName);
+        String patient = MedicalRecordHandler.getPatient(fileName);
+
+        return userName.equals(doctor) || userName.equals(nurse) || userName.equals(patient);
+    }
+
+    public boolean canCreate(Individual user) {
+        return user.getName().equals(this.doctor);
     }
 
 }

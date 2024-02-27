@@ -1,9 +1,10 @@
+package projekt2;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.net.*;
 import javax.net.*;
 import javax.net.ssl.*;
-import projekt1.server;
 import projekt2.Individuals.Individual;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
@@ -15,7 +16,6 @@ import java.util.Set;
 public class Server implements Runnable {
   private ServerSocket serverSocket = null;
   private static int numConnectedClients = 0;
-  private List<Individual> individuals;
   IndividualPermissions ip;
   
   public Server(ServerSocket ss) throws IOException {
@@ -25,6 +25,7 @@ public class Server implements Runnable {
   }
 
   public void run() {
+    Individual user = null;
     try {
       SSLSocket socket=(SSLSocket)serverSocket.accept();
       newListener();
@@ -36,24 +37,34 @@ public class Server implements Runnable {
       numConnectedClients++;
 
 
-      Individual individual;
       
-      String fileName = "testfiles/test.txt";
-      ip.loadIndividuals(fileName);
-      //loadRecords();
+      
+      String users = "projekt2/testfiles/users.txt";
+      ip.loadIndividuals(users);
       for(Individual other : ip.getIndividuals()){
         if(other.getName().equals(subject)){
-            individual = other;
+            user = other;
             break;
         }
       }
 
-      if(individual == null){
-        socket.close();
-        return;
-      }
+      //Kommentera tillbaka detta!
+      //if(individual == null){
+       // socket.close();
+        //System.out.println("User not found. Closing.");
+        //return;
+      //}
 
-      //Individual finns i "systemet" 
+      //user = ip.getIndividuals().get(0); //Alice
+      //user = ip.getIndividuals().get(1); //Bob
+      //user = ip.getIndividuals().get(2); //Syster1
+      user = ip.getIndividuals().get(7); //Government
+      //user = ip.getIndividuals().get(4); //Kurt
+      //user = ip.getIndividuals().get(6); //Rasmus
+      
+
+
+      //Individual finns i users
       System.out.println("client connected");
       System.out.println("client name (cert subject DN field): " + subject);
       System.out.println("client issuer (cert issuer DN field): " + issuer);
@@ -65,10 +76,12 @@ public class Server implements Runnable {
       out = new PrintWriter(socket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+      //out.println("Welcome " + user.getRole() + " " + user.getName() + ".");
+      //out.flush();
+
       String clientMsg = null;
       while ((clientMsg = in.readLine()) != null) {
-        String answer = ip.answer(individual, clientMsg);
-        //String rev = new StringBuilder(clientMsg).reverse().toString();
+        String answer = ip.answer(user, clientMsg);
         System.out.println("received '" + clientMsg + "' from client");
         System.out.print("sending '" + answer + "' to client...");
         out.println(answer);
@@ -100,7 +113,7 @@ public class Server implements Runnable {
       ServerSocketFactory ssf = getServerSocketFactory(type);
       ServerSocket ss = ssf.createServerSocket(port, 0, InetAddress.getByName(null));
       ((SSLServerSocket)ss).setNeedClientAuth(true); // enables client authentication
-      new server(ss);
+      new Server(ss);
     } catch (IOException e) {
       System.out.println("Unable to start Server: " + e.getMessage());
       e.printStackTrace();
