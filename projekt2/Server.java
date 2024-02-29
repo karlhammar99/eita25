@@ -37,7 +37,13 @@ public class Server implements Runnable {
       numConnectedClients++;
 
 
-      
+      System.out.println(subject);
+      String [] s = subject.split("=",6);
+      String [] s1 = s[1].split(",",6);
+
+
+      System.out.println(s1[0] + "SUBJECT");
+    subject=s1[0];
       
       String users = "projekt2/testfiles/users.txt";
       ip.loadIndividuals(users);
@@ -49,16 +55,16 @@ public class Server implements Runnable {
       }
 
       //Kommentera tillbaka detta!
-      //if(individual == null){
-       // socket.close();
-        //System.out.println("User not found. Closing.");
-        //return;
-      //}
+      if(user == null){
+        socket.close();
+        System.out.println("User not found. Closing.");
+        return;
+      }
 
       //user = ip.getIndividuals().get(0); //Alice
       //user = ip.getIndividuals().get(1); //Bob
       //user = ip.getIndividuals().get(2); //Syster1
-      user = ip.getIndividuals().get(7); //Government
+     // user = ip.getIndividuals().get(7); //Government
       //user = ip.getIndividuals().get(4); //Kurt
       //user = ip.getIndividuals().get(6); //Rasmus
       

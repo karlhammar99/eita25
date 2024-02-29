@@ -14,11 +14,21 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import java.security.cert.*; //Fungerar inte annars
+import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws Exception {
         String host = null;
         int port = -1;
+
+
+      Scanner scan=new Scanner(System.in);
+      System.out.println("Enter Username");
+      String username=scan.nextLine();
+
+      System.out.println("Enter password");
+        String pwd=scan.nextLine();
+
 
         for (int i = 0; i < args.length; i++) {
             System.out.println("args" + i + " =" + args[i]);
@@ -40,16 +50,16 @@ public class Client {
       try {
         SSLSocketFactory factory = null;
         try {
-          char[] password = "password".toCharArray();
+          char[] password = pwd.toCharArray();
           KeyStore ks = KeyStore.getInstance("JKS");
           KeyStore ts = KeyStore.getInstance("JKS");
           KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
           TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
           SSLContext ctx = SSLContext.getInstance("TLSv1.2");
           // keystore password (storepass)
-          ks.load(new FileInputStream("clientkeystore"), password);  
+          ks.load(new FileInputStream("projekt2/"+ username+"/clientkeystore"), password);
           // truststore password (storepass);
-          ts.load(new FileInputStream("clienttruststore"), password); 
+          ts.load(new FileInputStream("projekt2/"+ username+"/clienttruststore"), password);
           kmf.init(ks, password); // user password (keypass)
           tmf.init(ts); // keystore can be used as truststore here
           ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
