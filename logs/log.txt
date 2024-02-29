@@ -1,0 +1,19 @@
+
+2024.02.29.20.33.44 Rasmustried to create medical record for patient Kallebut was unauthorized.
+2024.02.29.20.35.46 Rasmuscreated medical record for patient Rasmus1.
+2024.02.29.20.36.30 Rasmus read Rasmus1_0.medicalRecord
+2024.02.29.21.38.55 CIA read Rasmus1_0.medicalRecord
+2024.02.29.21.39.44 CIA tried to delete Rasmus1_0.medicalRecord, but it did not exist.
+2024.02.29.21.40.14 CIA tried to delete Rasmus1_1.medicalRecord, but it did not exist.
+2024.02.29.21.40.33 CIA tried to delete Rasmus1_0.medicalRecord, but it did not exist.
+2024.02.29.21.40.48 CIA read Rasmus1_0.medicalRecord
+2024.02.29.21.42.29 CIA tried to delete Kalle_0.medicalRecord, but it did not exist.
+2024.02.29.21.52.03 Rasmustried to create medical record for patient Kallebut was unauthorized.
+2024.02.29.21.53.55 Rasmuscreated medical record for patient Rasmusa.
+2024.02.29.21.57.23 Kurt wrote: "bhsdjfbsdlf" in Rasmusa_0.medicalRecord
+2024.02.29.22.00.27 CIA tried to delete Rasmusa_0.medicalRecord, but it did not exist.
+2024.02.29.22.01.39 CIA tried to delete Rasmusa_0.medicalRecord, but it did not exist.
+2024.02.29.22.06.08 CIA tried to delete Rasmusa_0.medicalRecord, but it did not exist.
+2024.02.29.22.06.12 CIA read Rasmusa_0.medicalRecord
+2024.02.29.22.07.09 CIA read Rasmusa_0.medicalRecord
+2024.02.29.22.07.14 CIA tried to delete Rasmusa_0.medicalRecord, but it did not exist.
