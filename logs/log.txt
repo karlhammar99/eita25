@@ -17,3 +17,6 @@
 2024.02.29.22.06.12 CIA read Rasmusa_0.medicalRecord
 2024.02.29.22.07.09 CIA read Rasmusa_0.medicalRecord
 2024.02.29.22.07.14 CIA tried to delete Rasmusa_0.medicalRecord, but it did not exist.
+2024.02.29.22.14.57 CIA read Rasmusa_0.medicalRecord
+2024.02.29.22.20.51 Alicecreated medical record for patient Kalle.
+2024.02.29.22.20.57 Alice read Kalle_0.medicalRecord
