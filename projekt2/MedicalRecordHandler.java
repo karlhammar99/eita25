@@ -37,7 +37,9 @@ public class MedicalRecordHandler {
     }
 
     public static boolean deleteMedicalRecord(String fileName) {
-        File file = new File(folderPath + fileName + ".medicalRecord");
+        System.out.println("MedicalRecords/" + fileName + ".medicalRecord");
+        File file = new File("MedicalRecords/" + fileName + ".medicalRecord");
+
         if (file.exists()) {
             if (file.delete()) {
                 return true;
