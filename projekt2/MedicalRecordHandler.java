@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class MedicalRecordHandler {
-    private static final String folderPath = "MedicalRecords/";
+    private static  String folderPath = "MedicalRecords/";
 
     public static void writeMedicalRecord(String fileName, String data) {
         Properties record = loadFromFile(fileName + ".medicalRecord");
